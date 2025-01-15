@@ -42,7 +42,7 @@ const ValidatePage = () => {
       <div className="flex justify-between">
         <Button size="lg">Validar e enviar</Button>
         <Link href="/validar/analise-ia">
-        <Button size="lg">Validar</Button>
+          <Button size="lg">Validar</Button>
         </Link>
       </div>
     </div>
