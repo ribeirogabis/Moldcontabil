@@ -15,7 +15,7 @@ export const Header = () => {
         <Item href="/validar">Validar</Item>
         <Item href="/enviar">Enviar</Item>
         <Item href="/plano-de-contas">Plano de contas</Item>
-        <Item href="/suporte">Suporte</Item>
+        <Item href="/support">Suporte</Item>
       </ul>
     </div>
   )
