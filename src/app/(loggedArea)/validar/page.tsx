@@ -1,44 +1,45 @@
-import { Button } from '@/components/ui/button'
-import { CustomerDocumentsTable } from './components/CustomerDocumentsTable'
-import Link from 'next/link'
+import { Button } from '@/components/ui/button';
+import { CustomerDocumentsTable } from './components/CustomerDocumentsTable';
+import Link from 'next/link';
 
-const ValidatePage = () => {
+interface Documento {
+  id: number;
+  nome: string;
+  cpf_cnpj: string;
+  quantidade_documentos: number;
+}
+
+// Função para buscar os dados da API
+const fetchDocumentos = async (): Promise<Documento[]> => {
+  try {
+    const response = await fetch(
+      'http://127.0.0.1:8000/api/v1/client_serve/documentos-pendentes/'
+    );
+    if (!response.ok) {
+      throw new Error('Erro ao buscar dados da API');
+    }
+    return response.json();
+  } catch (error) {
+    console.error('Erro na requisição:', error);
+    return []; // Retorna um array vazio em caso de erro
+  }
+};
+
+const ValidatePage = async () => {
+  // Busca os dados da API diretamente no servidor
+  const documentos = await fetchDocumentos();
+
+  // Transforma os dados da API no formato esperado pelo componente CustomerDocumentsTable
+  const tableData = documentos.map((doc) => ({
+    customer: doc.nome,
+    cnpj: doc.cpf_cnpj,
+    quantity: doc.quantidade_documentos,
+    status: 'Pendente validação',
+  }));
+
   return (
     <div className="p-4 flex flex-col gap-4">
-      <CustomerDocumentsTable
-        data={[
-          {
-            customer: 'Empresa Alpha',
-            cnpj: '12.345.678/0001-90',
-            quantity: 50,
-            status: 'Pendente validação',
-          },
-          {
-            customer: 'Comercial Beta',
-            cnpj: '98.765.432/0001-12',
-            quantity: 30,
-            status: 'Pendente validação',
-          },
-          {
-            customer: 'Distribuidora Gama',
-            cnpj: '11.222.333/0001-44',
-            quantity: 75,
-            status: 'Pendente validação',
-          },
-          {
-            customer: 'Fornecedor Delta',
-            cnpj: '22.333.444/0001-55',
-            quantity: 20,
-            status: 'Pendente validação',
-          },
-          {
-            customer: 'Indústria Épsilon',
-            cnpj: '33.444.555/0001-66',
-            quantity: 100,
-            status: 'Pendente validação',
-          },
-        ]}
-      />
+      <CustomerDocumentsTable data={tableData} />
       <div className="flex justify-between">
         <Button size="lg">Validar e enviar</Button>
         <Link href="/validar/analise-ia">
@@ -46,7 +47,7 @@ const ValidatePage = () => {
         </Link>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default ValidatePage
+export default ValidatePage;
