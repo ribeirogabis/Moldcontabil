@@ -20,11 +20,13 @@ import { useState } from 'react'
 type DataTableProps<TData, TValue> = {
   columns: ColumnDef<TData, TValue>[]
   data: TData[]
+  onRowClick?: (data: TData) => void
 }
 
 export function DataTable<TData, TValue>({
   columns,
   data,
+  onRowClick,
 }: DataTableProps<TData, TValue>) {
   const [rowSelection, setRowSelection] = useState({})
   const table = useReactTable({
@@ -64,6 +66,8 @@ export function DataTable<TData, TValue>({
               <TableRow
                 key={row.id}
                 data-state={row.getIsSelected() && 'selected'}
+                onClick={() => onRowClick?.(row.original)}
+                className="cursor-pointer hover:bg-gray-100"
               >
                 {row.getVisibleCells().map((cell) => (
                   <TableCell key={cell.id}>

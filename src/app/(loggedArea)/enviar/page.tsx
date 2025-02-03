@@ -1,5 +1,5 @@
 import { Button } from '@/components/ui/button'
-import { CustomerDocumentsTable } from '../validar/components/CustomerDocumentsTable'
+import { CustomerDocumentsTable } from '../validar/components/CustomersTable'
 
 const EnviarPage = () => {
   return (

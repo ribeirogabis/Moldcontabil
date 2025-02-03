@@ -4,9 +4,10 @@ import { Checkbox } from '@/components/ui/checkbox'
 import { ColumnDef } from '@tanstack/react-table'
 
 type CustomerDocumentsType = {
+  id: string
   customer: string
   cnpj: string
-  quantity: number
+  chartOfAccount: string
   status: string
 }
 
@@ -38,12 +39,8 @@ const columns: ColumnDef<CustomerDocumentsType>[] = [
     header: 'CNPJ/CPF',
   },
   {
-    accessorKey: 'quantity',
-    header: 'Qtd de Documentos',
-  },
-  {
-    accessorKey: 'status',
-    header: 'Status',
+    accessorKey: 'chartOfAccount',
+    header: 'Plano de Contas',
   },
 ]
 
